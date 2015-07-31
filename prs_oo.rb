@@ -1,6 +1,8 @@
 #Paper Rock Scissors OO Version
 
 class Player
+  include Comparable
+  
   CHOICES = {'p' => 'Paper', 'r' => 'Rock', 's' => 'Scissors'}
   
   attr_reader :choice
@@ -20,31 +22,26 @@ class Player
     CHOICES[@choice]
   end
   
-  def == (other)
-    @choice == other.choice
-  end
-  
-  def > (other)
-    result = true
-    case @choice
-    when 'p'
-      if other.choice == 's'
-        result = false
-      end
-    when 'r'
-      if other.choice == 'p'
-        result = false
-      end
-    when 's'
-      if other.choice == 'r'
-        result = false
+  def <=>(other)
+    result = 0
+    if @choice != other.choice
+      result = 1
+      case @choice
+      when 'p'
+        if other.choice == 's'
+          result = -1
+        end
+      when 'r'
+        if other.choice == 'p'
+          result = -1
+        end
+      when 's'
+        if other.choice == 'r'
+          result = -1
+        end
       end
     end
     result
-  end
-  
-  def < (other)
-    !(@choice > other)
   end
 end
 
@@ -85,11 +82,8 @@ class Game
   
       puts "Play again (y/n)"
       break if gets.chomp.downcase != 'y'
-    
     end
-
   end
-  
 end
 
 Game.new.run
