@@ -3,17 +3,17 @@
 class Player
   CHOICES = {'p' => 'Paper', 'r' => 'Rock', 's' => 'Scissors'}
   
-  attr_accessor :choice
+  attr_reader :choice
   
   def input_choice
     begin
       puts "Pick one: (p, r, s):"
-      self.choice = gets.chomp.downcase
+      @choice = gets.chomp.downcase
     end until CHOICES.keys.include?(choice)
   end
   
   def make_choice
-     self.choice = CHOICES.keys.sample
+     @choice = CHOICES.keys.sample
   end
 
   def get_choice
